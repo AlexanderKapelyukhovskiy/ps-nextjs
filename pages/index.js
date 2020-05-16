@@ -1,4 +1,5 @@
 import React from "react";
+import DigitalClock from "../src/DigitalClock";
 
 export default class Index extends React.Component {
   constructor(props) {
@@ -16,13 +17,11 @@ export default class Index extends React.Component {
     this.interval = setInterval(() => this.tick(), 1000);
   }
 
-  componentDidUnmount() {
+  componentUnmount() {
     clearInterval(this.interval);
   }
 
   render() {
-    return (
-      <h1>Hello From Pluralsight and React Component {this.state.time}</h1>
-    );
+    return <DigitalClock time={this.state.time} />;
   }
 }

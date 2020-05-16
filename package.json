@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
     "http-server": "^0.12.3",
     "next": "^9.4.0",
     "react": "^16.13.1",
