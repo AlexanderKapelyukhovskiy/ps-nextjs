@@ -2,10 +2,16 @@ import React from "react";
 import DigitalClock from "../src/DigitalClock";
 
 export default class Index extends React.Component {
+  static async getInitialProps() {
+    return {
+      time: new Date().toISOString(),
+    };
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      time: new Date().toLocaleString(),
+      time: props.time,
     };
   }
 
