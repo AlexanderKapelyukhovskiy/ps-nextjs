@@ -10,13 +10,15 @@ const rootElement = document.getElementById("app");
 //   "Hello From Pluralsight and React"
 // );
 
-const Hello = function (props) {
-  return React.createElement(
-    "h1",
-    { className: "orange" },
-    "Hello From Pluralsight and React Component " + props.time
-  );
-};
+class Hello extends React.Component {
+  render() {
+    return React.createElement(
+      "h1",
+      { className: "orange" },
+      "Hello From Pluralsight and React Component " + this.props.time
+    );
+  }
+}
 
 //rootElement.appendChild(myElement);
 ReactDOM.render(
