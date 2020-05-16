@@ -10,16 +10,16 @@ const rootElement = document.getElementById("app");
 //   "Hello From Pluralsight and React"
 // );
 
-const Hello = function () {
+const Hello = function (props) {
   return React.createElement(
     "h1",
     { className: "orange" },
-    "Hello From Pluralsight and React Component"
+    "Hello From Pluralsight and React Component " + props.time
   );
 };
 
 //rootElement.appendChild(myElement);
 ReactDOM.render(
-  React.createElement(Hello, {}, null),
+  React.createElement(Hello, { time: new Date().toLocaleDateString() }, null),
   document.getElementById("app")
 );
