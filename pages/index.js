@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Link from "next/link";
 
 export default class Index extends React.Component {
   static async getInitialProps() {
@@ -32,13 +33,18 @@ export default class Index extends React.Component {
 
   render() {
     return (
-      <ul>
-        {this.state.speakerData.map((speaker) => (
-          <li key={speaker.id}>
-            {speaker.firstName} {speaker.lastName}
-          </li>
-        ))}
-      </ul>
+      <div>
+        <Link href="/sessions">
+          <a>Sessions</a>
+        </Link>
+        <ul>
+          {this.state.speakerData.map((speaker) => (
+            <li key={speaker.id}>
+              {speaker.firstName} {speaker.lastName}
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
 }
