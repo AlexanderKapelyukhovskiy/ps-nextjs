@@ -17,7 +17,8 @@
     "json-server": "^0.16.1"
   },
   "scripts": {
-    "dev": "run-p next json-server",
+    "dev": "run-p server json-server",
+    "server": "node server.js",
     "next": "next",
     "build": "next build",
     "start": "next start",
