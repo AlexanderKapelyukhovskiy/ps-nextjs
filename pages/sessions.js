@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import Link from "next/link";
+import SessionCard from "../src/SessionCard";
 
 class Index extends React.Component {
   static async getInitialProps() {
@@ -36,17 +36,19 @@ class Index extends React.Component {
 
   render() {
     return (
-      <div>
-        <Link href="/">
-          <a>Home</a>
-        </Link>
-        <ul>
-          {this.state.sessionData.map((session) => (
-            <li key={session.id}>
-              {session.title} {session.id}
-            </li>
-          ))}
-        </ul>
+      <div className="container">
+        <div className="row">
+          <div className="card-deck">
+            {this.state.sessionData.map((session) => (
+              <div
+                className="card col-4 cardmin margintopbottom"
+                key={session.id}
+              >
+                <SessionCard session={session} />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
