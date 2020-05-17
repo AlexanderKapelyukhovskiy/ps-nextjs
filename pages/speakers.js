@@ -2,7 +2,10 @@ import React from "react";
 import axios from "axios";
 import SpeakerCard from "../src/SpeakerCard";
 
-export default class Speakers extends React.Component {
+import getConfig from "next/config";
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
+
+class Speakers extends React.Component {
   static GetSpeakersUrl() {
     if (process.env.NODE_ENV === "production") {
       return (
@@ -43,7 +46,7 @@ export default class Speakers extends React.Component {
 
   componentDidMount() {}
 
-  componentUnmount() {}
+  componentWillUnmount() {}
 
   render() {
     return (
@@ -64,3 +67,5 @@ export default class Speakers extends React.Component {
     );
   }
 }
+
+export default Speakers;
