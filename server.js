@@ -11,7 +11,7 @@ const ssrCache = new LRUCache({
     return n.toString().length + key.toString().length;
   },
   max: 100 * 1000 * 1000,
-  maxAge: 1000 * 20,
+  maxAge: 1000 * 10,
 });
 
 app
