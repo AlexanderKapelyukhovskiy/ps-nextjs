@@ -4,9 +4,9 @@ import getConfig from "next/config";
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 class Speaker extends Component {
-  static GetSpeakerUrl() {
+  static GetSpeakerUrl(isServer) {
     if (process.env.NODE_ENV === "production") {
-      if (typeof window === "undefined") {
+      if (isServer) {
         return process.env.RESTURL_SPEAKER_DOCKER; //access api in docker container
       }
       return (
@@ -18,9 +18,10 @@ class Speaker extends Component {
     }
   }
 
-  static async getInitialProps({ query }) {
+  static async getInitialProps({ query, req }) {
+    const isServer = !!req;
     const promise = axios
-      .get(`${Speaker.GetSpeakerUrl()}/${query.speakerId}`)
+      .get(`${Speaker.GetSpeakerUrl(isServer)}/${query.speakerId}`)
       .then((response) => {
         return {
           hasErrored: false,

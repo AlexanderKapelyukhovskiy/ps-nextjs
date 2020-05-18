@@ -5,9 +5,10 @@ import getConfig from "next/config";
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 class Sessions extends React.Component {
-  static GetSessionsUrl() {
+  static GetSessionsUrl(isServer) {
+    console.log(isServer);
     if (process.env.NODE_ENV === "production") {
-      if (typeof window === "undefined") {
+      if (isServer) {
         return process.env.RESTURL_SESSIONS_DOCKER; //access api in docker container
       }
       return (
@@ -19,9 +20,10 @@ class Sessions extends React.Component {
     }
   }
 
-  static async getInitialProps() {
-    var promise = axios
-      .get(Sessions.GetSessionsUrl())
+  static async getInitialProps({ req }) {
+    const isServer = !!req;
+    const promise = axios
+      .get(Sessions.GetSessionsUrl(isServer))
       .then((response) => {
         return {
           hasErrored: false,
