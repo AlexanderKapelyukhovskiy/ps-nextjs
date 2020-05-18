@@ -84,10 +84,6 @@ class Speakers extends React.Component {
   componentWillUnmount() {}
 
   render() {
-    if (this.state.isLoading) {
-      return <div>Loading...</div>;
-    }
-
     return (
       <div className="container">
         <div className="row">
@@ -97,7 +93,10 @@ class Speakers extends React.Component {
                 className="card col-4 cardmin margintopbottom20"
                 key={speaker.id}
               >
-                <SpeakerCard speaker={speaker} />
+                <SpeakerCard
+                  speaker={speaker}
+                  isLoading={this.state.isLoading}
+                />
               </div>
             ))}
           </div>

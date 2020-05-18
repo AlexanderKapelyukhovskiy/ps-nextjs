@@ -59,7 +59,6 @@ class Speaker extends Component {
   }
 
   componentDidMount() {
-    console.log(this.state.speakerId);
     axios
       .get(`${Speaker.GetSpeakerUrl()}/${this.state.speakerId}`)
       .then((response) => {
