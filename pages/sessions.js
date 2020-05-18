@@ -22,37 +22,69 @@ class Sessions extends React.Component {
 
   static async getInitialProps({ req }) {
     const isServer = !!req;
-    const promise = axios
-      .get(Sessions.GetSessionsUrl(isServer))
-      .then((response) => {
-        return {
-          hasErrored: false,
-          sessionData: response.data,
-        };
-      })
-      .catch((error) => {
-        return {
-          hasErrored: true,
-          message: error.message,
-        };
-      });
-    return promise;
+    if (isServer) {
+      const promise = axios
+        .get(Sessions.GetSessionsUrl(isServer))
+        .then((response) => {
+          return {
+            hasErrored: false,
+            sessionData: response.data,
+          };
+        })
+        .catch((error) => {
+          return {
+            hasErrored: true,
+            message: error.message,
+          };
+        });
+      return promise;
+    } else {
+      return {
+        sessionData: [...Array(5)].map((_, i) => ({
+          title: "",
+          id: i,
+        })),
+        isLoading: true,
+      };
+    }
   }
 
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: props.isLoading,
       hasErrored: props.hasErrored,
       message: props.message,
       sessionData: props.sessionData,
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    axios
+      .get(Sessions.GetSessionsUrl())
+      .then((response) => {
+        this.setState({
+          isLoading: false,
+          hasErrored: false,
+          sessionData: response.data,
+        });
+      })
+      .catch((error) => {
+        return {
+          isLoading: false,
+          hasErrored: true,
+          message: error.message,
+          sessionData: [],
+        };
+      });
+  }
 
   componentWillUnmount() {}
 
   render() {
+    if (this.state.isLoading) {
+      return <div>Loading...</div>;
+    }
     return (
       <div className="container">
         <div className="row">
