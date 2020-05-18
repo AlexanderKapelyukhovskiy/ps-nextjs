@@ -6,9 +6,9 @@ import getConfig from "next/config";
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 class Speakers extends React.Component {
-  static GetSpeakersUrl(appContext) {
+  static GetSpeakersUrl() {
     if (process.env.NODE_ENV === "production") {
-      if (appContext.ctx.req) {
+      if (typeof window === "undefined") {
         return process.env.RESTURL_SPEAKERS_DOCKER; //access api in docker container
       }
       return (
@@ -20,9 +20,9 @@ class Speakers extends React.Component {
     }
   }
 
-  static async getInitialProps(appContext) {
+  static async getInitialProps() {
     const promise = axios
-      .get(Speaker.GetSpeakersUrl(appContext))
+      .get(Speakers.GetSpeakersUrl())
       .then((response) => {
         return {
           hasErrored: false,
