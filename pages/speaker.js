@@ -4,8 +4,11 @@ import getConfig from "next/config";
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 class Speaker extends Component {
-  static GetSpeakerUrl() {
+  static GetSpeakerUrl(appContext) {
     if (process.env.NODE_ENV === "production") {
+      if (appContext.ctx.req) {
+        return process.env.RESTURL_SPEAKER_DOCKER; //access api in docker container
+      }
       return (
         process.env.RESTURL_SPEAKER_PROD ||
         publicRuntimeConfig.RESTURL_SPEAKER_PROD
@@ -15,9 +18,10 @@ class Speaker extends Component {
     }
   }
 
-  static async getInitialProps({ query }) {
-    var promise = axios
-      .get(`${Speaker.GetSpeakerUrl()}/${query.speakerId}`)
+  static async getInitialProps(appContext) {
+    const query = appContext.query;
+    const promise = axios
+      .get(`${Speaker.GetSpeakerUrl(appContext)}/${query.speakerId}`)
       .then((response) => {
         return {
           hasErrored: false,

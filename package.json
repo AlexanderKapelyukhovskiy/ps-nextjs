@@ -7,6 +7,7 @@
     "@zeit/next-css": "^1.0.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "cross-env": "^7.0.2",
     "dotenv-webpack": "^1.8.0",
     "next": "^9.4.0",
     "react": "^16.13.1",
@@ -18,12 +19,13 @@
     "json-server": "^0.16.1"
   },
   "scripts": {
-    "dev": "run-p server json-server",
+    "dev": "cross-env NODE_ENV=development run-p server json-server",
+    "prod": "cross-env NODE_ENV=production run-p server json-server",
     "server": "node server.js",
     "next": "next",
     "build": "next build",
     "start": "next start",
-    "json-server": "json-server --watch db.json --port 4000 --delay 200",
+    "json-server": "json-server --watch db.json --port 4000 --delay 0 --host 0.0.0.0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

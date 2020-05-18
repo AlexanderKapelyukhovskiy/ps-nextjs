@@ -10,11 +10,9 @@ module.exports = withCSS({
   },
   publicRuntimeConfig: {
     // Will be available on both server and client
-    RESTURL_SPEAKERS_PROD:
-      "https://www.siliconvalley-codecamp.com/rest/speakers/ps",
-    RESTURL_SPEAKER_PROD: "https://www.siliconvalley-codecamp.com/rest/speaker",
-    RESTURL_SESSIONS_PROD:
-      "https://www.siliconvalley-codecamp.com/rest/sessions",
+    RESTURL_SPEAKERS_PROD: "http://docker.local.com:4000/speakers",
+    RESTURL_SPEAKER_PROD: "http://docker.local.com:4000/speaker",
+    RESTURL_SESSIONS_PROD: "http://docker.local.com:4000/sessions",
   },
   webpack(config, options) {
     config.plugins = config.plugins || [];
