@@ -20,32 +20,81 @@ class Speaker extends Component {
 
   static async getInitialProps({ query, req }) {
     const isServer = !!req;
-    const promise = axios
-      .get(`${Speaker.GetSpeakerUrl(isServer)}/${query.speakerId}`)
+    if (isServer) {
+      const promise = axios
+        .get(`${Speaker.GetSpeakerUrl(isServer)}/${query.speakerId}`)
+        .then((response) => {
+          return {
+            speakerId: query.speakerId,
+            hasErrored: false,
+            speakerDataOne: response.data,
+          };
+        })
+        .catch((error) => {
+          return {
+            speakerId: query.speakerId,
+            hasErrored: true,
+            message: error.message,
+          };
+        });
+      return promise;
+    } else {
+      return {
+        speakerId: query.speakerId,
+        speakerDataOne: {},
+        isLoading: true,
+      };
+    }
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      speakerId: props.speakerId,
+      isLoading: props.isLoading,
+      hasErrored: props.hasErrored,
+      message: props.message,
+      speakerDataOne: props.speakerDataOne,
+    };
+  }
+
+  componentDidMount() {
+    console.log(this.state.speakerId);
+    axios
+      .get(`${Speaker.GetSpeakerUrl()}/${this.state.speakerId}`)
       .then((response) => {
-        return {
+        this.setState({
+          speakerId: this.state.speakerId,
+          isLoading: false,
           hasErrored: false,
           speakerDataOne: response.data,
-        };
+        });
       })
       .catch((error) => {
-        return {
+        this.setState({
+          speakerId: this.props.speakerId,
+          isLoading: false,
           hasErrored: true,
           message: error.message,
-        };
+        });
       });
-    return promise;
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <div>Loading...</div>;
+    }
     return (
       <div className="container">
         <div className="row">
           <h2 className="margintopbottom20">
-            {this.props.speakerDataOne.firstName}{" "}
-            {this.props.speakerDataOne.lastName}
+            {this.state.speakerDataOne.firstName}{" "}
+            {this.state.speakerDataOne.lastName}
           </h2>
-          <p className="margintopbottom20">{this.props.speakerDataOne.bio}</p>
+          <p
+            className="margintopbottom20"
+            dangerouslySetInnerHTML={{ __html: this.state.speakerDataOne.bio }}
+          ></p>
         </div>
       </div>
     );
